@@ -1,5 +1,16 @@
+module Main (main) where
+import System.Exit
+
 import Test.HUnit
 import Physics.MultipletCombiner
+
+main :: IO ()
+main = do
+    counts <- runTestTT tests
+    if (errors counts + failures counts == 0)
+        then exitSuccess
+        else exitFailure
+
 
 comb1 = TestCase (assertEqual "[1] >< [1], " [[2],[0]] ([1] >< [1]))
 comb2 = TestCase (assertEqual "[1,0] >< [0,1], " [[1,1],[0,0]] ([1,0] >< [0,1]))
@@ -29,4 +40,6 @@ tests = TestList [TestLabel "comb1" comb1,
                 TestLabel "yt3" yt3,
                 TestLabel "yt4" yt4,
                 TestLabel "yt5" yt5]
+
+
 
