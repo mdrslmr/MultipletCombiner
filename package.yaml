@@ -10,7 +10,7 @@ extra-source-files:
   - multiplets.pdf
 
 dependencies:
-  - base >= 4.9 && < 4.16
+  - base >= 4.9 && < 5
   - HUnit == 1.6.2.0
 
 library:
