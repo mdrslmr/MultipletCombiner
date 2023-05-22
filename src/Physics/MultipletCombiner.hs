@@ -28,7 +28,7 @@ and the function 'multi' and 'multis' to calculate the multiplicities, e.g.:
 
 
 
-Example for combinaing two multiplets using Young-Diagrams:
+Example for combining two multiplets using Young-Diagrams:
 
 @
 
@@ -50,10 +50,10 @@ Example for combinaing two multiplets using Young-Diagrams:
 
 module Physics.MultipletCombiner
     (
-    -- * Kroneker product like operators
+    -- * Kronecker product like operators
         (><),
         (>><),
-    -- * Multiplicitiy calculation
+    -- * Multiplicity calculation
         multi,
         multis,
     -- * Basic data type
@@ -155,13 +155,13 @@ ytsNums (t:ts) = case ytNums t of
                             is -> is : ytsNums ts
 
 -- | Check for the string for being composed of admissible letters.
--- | Admissible and not admissible examples:
+--   Admissible and not admissible examples:
 --
 -- @
 --
 -- admis "aabacdaebbcbd"  = True
 --
--- last letter not admissable
+-- last letter not admissible
 -- admis "abacae"  = False
 -- admis "abacdec"  = False
 --
@@ -224,7 +224,7 @@ newtab :: String -> Tableau -> [Int] -> Tableau
 newtab _ t  [] = t
 newtab s t (i:is) = newtab s (appendAt i s t) is
 
--- | Create multiple new tableau using 'newtab' given one tableau and
+-- | Create multiple new tableau using newtab given one tableau and
 --  one line of a right side tableau.
 --
 --   e.g.: tabs1 (ytSymbols [1,1,1]) "a a "
