@@ -1,5 +1,5 @@
 name: MultipletCombiner
-version: 0.0.4
+version: 0.0.5
 synopsis: A Haskell implementation for combining SU(n) multiplets
 description: See README at <https://github.com/mdrslmr/MultipletCombiner>
 maintainer: Michael Dressel <michael.dressel@kloenplatz.de>
@@ -11,7 +11,6 @@ extra-source-files:
 
 dependencies:
   - base >= 4.9 && < 5
-  - HUnit == 1.6.2.0
 
 library:
   source-dirs: src
