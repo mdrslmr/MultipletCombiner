@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           MultipletCombiner
-version:        0.0.6
+version:        0.0.7
 synopsis:       A Haskell implementation for combining SU(n) multiplets
 description:    See README at <https://github.com/mdrslmr/MultipletCombiner>
 category:       physics,library,science,math,groups
