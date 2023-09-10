@@ -31,6 +31,12 @@ yt4 = TestCase (assertEqual "yt [1,0], " "# # \n# \n# \n"
 yt5 = TestCase (assertEqual "yt [2,1], " "# # # # \n# # \n# \n"
         (show $ ytSymbols [2,1]))
 
+pot1 = TestCase (assertEqual "]1] ><^ 0" [] ([1] ><^ 0))
+pot2 = TestCase (assertEqual "[] ><^ 3" [] ([] ><^ 3))
+pot3 = TestCase (assertEqual "[1] ><^ 3" ([1] >< [1] >>< [1]) ([1] ><^ 3))
+pot4 = TestCase (assertEqual "[1,0] ><^ 3" ([1,0] >< [1,0] >>< [1,0])
+                                                            ([1,0] ><^ 3))
+
 tests = TestList [TestLabel "comb1" comb1,
                 TestLabel "comb2" comb2,
                 TestLabel "multi1" multi1,
@@ -41,7 +47,11 @@ tests = TestList [TestLabel "comb1" comb1,
                 TestLabel "yt2" yt2,
                 TestLabel "yt3" yt3,
                 TestLabel "yt4" yt4,
-                TestLabel "yt5" yt5]
+                TestLabel "yt5" yt5,
+                TestLabel "pot1" pot1,
+                TestLabel "pot2" pot2,
+                TestLabel "pot3" pot3,
+                TestLabel "pot4" pot4]
 
 
 

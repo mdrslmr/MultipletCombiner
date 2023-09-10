@@ -53,6 +53,7 @@ module Physics.MultipletCombiner
     -- * Kronecker product like operators
         (><),
         (>><),
+        (><^),
     -- * Multiplicity calculation
         multi,
         multis,
@@ -327,6 +328,14 @@ noDoubs (t:ts) | t `elem` ts = noDoubs ts
                 concat [ l >< r | l <- ls ]
            | otherwise = []
 
+-- | Produce multiplet structure by combining one multiplet repeatedly
+(><^) :: [Int] -> Int -> [[Int]]
+(><^) t n | n < 1 = []
+(><^) t n = pot [[]] t n
+    where   pot :: [[Int]] -> [Int] -> Int -> [[Int]]
+            pot l r 1 = [r]
+            pot l r n = pot l r (n-1)  >>< r
+
 -- ghci> [1,0] >< [1,0] >>< [1,0]
 -- [[3,0],[1,1],[1,1],[0,0]]
 
@@ -348,3 +357,8 @@ multl l (i:is) | length (i:is) >= l =
 -- | Calculate the multiplicities of a list of multiplets
 multis :: [[Int]] -> [Int]
 multis = fmap multi
+
+
+
+
+
