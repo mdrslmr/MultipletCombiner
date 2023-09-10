@@ -18,6 +18,7 @@ comb2 = TestCase (assertEqual "[1,0] >< [0,1], " [[1,1],[0,0]] ([1,0] >< [0,1]))
 multi1 = TestCase (assertEqual "n in [2], " 3 (multi [2]))
 multi2 = TestCase (assertEqual "n in octet [1,1], " 8 (multi [1,1]))
 multi3 = TestCase (assertEqual "n in decuplet [3,0], " 10 (multi [3,0]))
+multi4 = TestCase (assertEqual "empty" 0 (multi []))
 
 yt1 = TestCase (assertEqual "yt [0],   " "# \n# \n"
         (show $ ytSymbols [0]))
@@ -35,6 +36,7 @@ tests = TestList [TestLabel "comb1" comb1,
                 TestLabel "multi1" multi1,
                 TestLabel "multi2" multi2,
                 TestLabel "multi3" multi3,
+                TestLabel "multi4" multi4,
                 TestLabel "yt1" yt1,
                 TestLabel "yt2" yt2,
                 TestLabel "yt3" yt3,

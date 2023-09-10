@@ -332,6 +332,7 @@ noDoubs (t:ts) | t `elem` ts = noDoubs ts
 
 -- | Calculate the multiplicity of a multiplet
 multi :: [Int] -> Int
+multi [] = 0
 multi is = round $ multt (length is) is
 
 multt :: Int -> [Int] -> Ratio Int
