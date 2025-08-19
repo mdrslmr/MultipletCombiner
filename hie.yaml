@@ -1,0 +1,10 @@
+cradle:
+  cabal:
+    - path: "src"
+      component: "lib:MultipletCombiner"
+
+    - path: "src"
+      component: "MultipletCombiner:test:spec"
+
+    - path: "tests"
+      component: "MultipletCombiner:test:spec"
