@@ -5,13 +5,15 @@ description: See README at <https://github.com/mdrslmr/MultipletCombiner>
 maintainer: Michael Dressel <michael.dressel@kloenplatz.de>
 github: mdrslmr/MultipletCombiner
 category: physics,library,science,math,groups
+
+ghc-options: [-dynamic]
+
 extra-source-files:
   - README
   - multiplets.pdf
 
 dependencies:
   - base >= 4.9 && < 5
-  - HUnit >= 1.6.2.0 && < 2
 
 library:
   source-dirs: src
@@ -21,6 +23,9 @@ library:
 tests:
   spec:
     main: "MultipletCombinerTests.hs"
+    dependencies:
+      - base >= 4.9 && < 5
+      - HUnit >= 1.6.2.0 && < 2
     source-dirs:
       - src
       - tests
