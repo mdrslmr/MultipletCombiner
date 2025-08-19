@@ -6,7 +6,6 @@ maintainer: Michael Dressel <michael.dressel@kloenplatz.de>
 github: mdrslmr/MultipletCombiner
 category: physics,library,science,math,groups
 
-ghc-options: [-dynamic]
 
 extra-source-files:
   - README
@@ -23,9 +22,11 @@ library:
 tests:
   spec:
     main: "MultipletCombinerTests.hs"
+    ghc-options: [-dynamic]
     dependencies:
       - base >= 4.9 && < 5
       - HUnit >= 1.6.2.0 && < 2
+      - MultipletCombiner
     source-dirs:
       - src
       - tests
