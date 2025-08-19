@@ -7,7 +7,7 @@ import Physics.MultipletCombiner
 main :: IO ()
 main = do
     counts <- runTestTT tests
-    if (errors counts + failures counts == 0)
+    if errors counts + failures counts == 0
         then exitSuccess
         else exitFailure
 
