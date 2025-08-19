@@ -1,10 +1,18 @@
 cradle:
-  cabal:
-    - path: "src"
-      component: "lib:MultipletCombiner"
+  multi:
+    - path: "./Setup.hs"
+      config: 
+        cradle:
+          none:
+    - path: "./"
+      config: 
+        cradle: 
+          cabal:
+            - path: "src"
+              component: "lib:MultipletCombiner"
 
-    - path: "src"
-      component: "MultipletCombiner:test:spec"
+            - path: "src"
+              component: "MultipletCombiner:test:spec"
 
-    - path: "tests"
-      component: "MultipletCombiner:test:spec"
+            - path: "tests"
+              component: "MultipletCombiner:test:spec"
