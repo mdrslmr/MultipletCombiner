@@ -33,14 +33,14 @@ Example for combining two multiplets using Young-Diagrams:
 @
 
     (0,0)x(0,0) = (0,0)
-    #     a   # a  # a   # a
-    # (x) b = #  > # b > # b
-    #     c   #    #     # c
+    #     a   #a  #a   #a
+    # (x) b = # > #b > #b
+    #     c   #   #    #c
 
     (1,0)x(1,0) = (step ->)   (2,0)      +   (step ->) (0,1)
-    # #    a a    # # a a    # # a a           # # a    # # a
-    #   x  b    = #       >  # b         +     # a    > # a b
-    #      c      #          # c               #        # c
+    ##    aa    ##aa    ##aa           ##a    ##a
+    #  x  b   = #    >  #b       +     #a   > #ab
+    #     c     #       #c             #      #c
 
 @
 
@@ -91,49 +91,49 @@ showt [t] = show t ++ "----"
 showt (t:ts) = show t ++ "----\n" ++ showt ts
 
 
--- ytSymbols [0] = ["# ",
---                   "# "]
--- ytSymbols [1] = ["# # ",
---                   "# "]
--- ytSymbols [2] = ["# # ",
---                   "# "]
--- ytSymbols [0,0] = ["# ",
---                     "# ",
---                     "# "]
--- ytSymbols [0,1] = ["# # ",
---                     "# # ",
---                     "# "]
--- ytSymbols [1,0] = ["# # ",
---                     "# ",
---                     "# "]
--- ytSymbols [1,1] = ["# # #",
---                     "# # ",
---                     "# "]
--- ytSymbols [0,2] = ["# # #",
---                     "# # #",
---                     "# "]
--- ytSymbols [1,2] = ["# # # #",
---                     "# # #",
---                     "# "]
--- ytSymbols [2,2] = ["# # # # #",
---                     "# # #",
---                     "# "]
--- ytSymbols [2,1] = ["# # # #",
---                     "# #",
---                     "# "]
--- ytSymbols [2,0] = ["# # #",
---                     "# ",
---                     "# "]
+-- ytSymbols [0] = ["#",
+--                   "#"]
+-- ytSymbols [1] = ["##",
+--                   "#"]
+-- ytSymbols [2] = ["##",
+--                   "#"]
+-- ytSymbols [0,0] = ["#",
+--                     "#",
+--                     "#"]
+-- ytSymbols [0,1] = ["##",
+--                     "##",
+--                     "#"]
+-- ytSymbols [1,0] = ["##",
+--                     "#",
+--                     "#"]
+-- ytSymbols [1,1] = ["###",
+--                     "##",
+--                     "#"]
+-- ytSymbols [0,2] = ["###",
+--                     "###",
+--                     "#"]
+-- ytSymbols [1,2] = ["####",
+--                     "###",
+--                     "#"]
+-- ytSymbols [2,2] = ["#####",
+--                     "###",
+--                     "#"]
+-- ytSymbols [2,1] = ["####",
+--                     "##",
+--                     "#"]
+-- ytSymbols [2,0] = ["###",
+--                     "#",
+--                     "#"]
 
 -- | Build a tableau bottom up from it's label.
 ytSymbols :: [Int] -> Tableau
 ytSymbols [] = Tableau []
-ytSymbols is = go (reverse is) (Tableau ["# "])
+ytSymbols is = go (reverse is) (Tableau ["#"])
               where
                 go :: [Int] -> Tableau -> Tableau
                 go []         t = t
                 go (i:is) (Tableau (r:rs)) = go is $ Tableau $
-                        concat (r : replicate i "# ") : r : rs
+                        concat (r : replicate i "#") : r : rs
 
 
 -- | Build multiple tableaux from multiple labels.
@@ -141,27 +141,39 @@ ytsSymbols :: [[Int]] -> [Tableau]
 ytsSymbols = map ytSymbols
 
 -- >>> ytSymbols [1]
--- # # 
--- # 
+-- ##
+-- #
 
 -- >>> ytsSymbols [[0],[1],[2],[0,1],[1,1]]
--- # 
--- # 
+-- #
+-- #
 -- ----
--- # # 
--- # 
+-- ##
+-- #
 -- ----
--- # # # 
--- # 
+-- ###
+-- #
 -- ----
--- # # 
--- # # 
--- # 
+-- ##
+-- ##
+-- #
 -- ----
--- # # # 
--- # # 
--- # 
+-- ###
+-- ##
+-- #
 -- ----
+
+
+-- >>> ytNums (ytSymbols [1])
+-- [1]
+--
+
+-- >>> ytNums (ytSymbols [1,0])
+-- [1,0]
+
+-- >>> ytsNums (ytsSymbols [[1],[1,0]])
+-- [[1],[1,0]]
+
 
 -- | Calculate the number representation from a tableau.
 ytNums :: Tableau -> [Int]
@@ -219,6 +231,16 @@ sym2letter (Tableau xss) = Tableau $
                                         | x == ' ' = x:line2let xs c
 
 
+-- >>> sym2letter (ytSymbols [0])
+-- a
+-- b
+
+-- >>> sym2letter (ytSymbols [1,0])
+-- aa
+-- b
+-- c
+
+
 -- | Append a string to the i'th line of a tableau.
 appendAt :: Int -> String -> Tableau -> Tableau
 appendAt _ _ (Tableau []) = Tableau []
@@ -266,6 +288,75 @@ tabs1 t r = go t s (combis j k)
                 s = sym r
                 j = nlines t
                 k = elemrow r
+
+-- >>> tabs1 (ytSymbols [1,1,1]) "aa"
+-- ####aa
+-- ###
+-- ##
+-- #
+-- ----
+-- ####a
+-- ###a
+-- ##
+-- #
+-- ----
+-- ####a
+-- ###
+-- ##a
+-- #
+-- ----
+-- ####a
+-- ###
+-- ##
+-- #a
+-- ----
+-- ####a
+-- ###a
+-- ##
+-- #
+-- ----
+-- ####
+-- ###a
+-- ##a
+-- #
+-- ----
+-- ####
+-- ###a
+-- ##
+-- #a
+-- ----
+-- ####a
+-- ###
+-- ##a
+-- #
+-- ----
+-- ####
+-- ###a
+-- ##a
+-- #
+-- ----
+-- ####
+-- ###
+-- ##a
+-- #a
+-- ----
+-- ####a
+-- ###
+-- ##
+-- #a
+-- ----
+-- ####
+-- ###a
+-- ##
+-- #a
+-- ----
+-- ####
+-- ###
+-- ##a
+-- #a
+-- ----
+
+
 
 nlines :: Tableau -> Int
 nlines (Tableau ts) = length ts
@@ -320,7 +411,7 @@ elemrow :: String -> Int
 elemrow = length.strip
 
 sym :: String -> String
-sym xs = (head.strip) xs : " "
+sym xs = (head.strip) xs : ""
 
 strip :: String -> String
 strip xs = [x | x <- xs, x /= ' ', x /= '#']

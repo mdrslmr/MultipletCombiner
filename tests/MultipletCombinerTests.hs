@@ -20,15 +20,15 @@ multi2 = TestCase (assertEqual "n in octet [1,1], " 8 (multi [1,1]))
 multi3 = TestCase (assertEqual "n in decuplet [3,0], " 10 (multi [3,0]))
 multi4 = TestCase (assertEqual "empty" 0 (multi []))
 
-yt1 = TestCase (assertEqual "yt [0],   " "# \n# \n"
+yt1 = TestCase (assertEqual "yt [0],   " "#\n#\n"
         (show $ ytSymbols [0]))
-yt2 = TestCase (assertEqual "yt [1],   " "# # \n# \n"
+yt2 = TestCase (assertEqual "yt [1],   " "##\n#\n"
         (show $ ytSymbols [1]))
-yt3 = TestCase (assertEqual "yt [0,0], " "# \n# \n# \n"
+yt3 = TestCase (assertEqual "yt [0,0], " "#\n#\n#\n"
         (show $ ytSymbols [0,0]))
-yt4 = TestCase (assertEqual "yt [1,0], " "# # \n# \n# \n"
+yt4 = TestCase (assertEqual "yt [1,0], " "##\n#\n#\n"
         (show $ ytSymbols [1,0]))
-yt5 = TestCase (assertEqual "yt [2,1], " "# # # # \n# # \n# \n"
+yt5 = TestCase (assertEqual "yt [2,1], " "####\n##\n#\n"
         (show $ ytSymbols [2,1]))
 
 pot1 = TestCase (assertEqual "]1] ><^ 0" [] ([1] ><^ 0))
