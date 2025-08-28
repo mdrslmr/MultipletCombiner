@@ -62,7 +62,6 @@ module Physics.MultipletCombiner
     -- * Lower level functions
         ytSymbols,
         ytsSymbols,
-        showt,
         ytNums,
         ytsNums,
         admis,
@@ -76,19 +75,21 @@ module Physics.MultipletCombiner
         allTs
     ) where
 
-import Data.Char
-import Data.Ratio
+import Data.Char ( chr, ord )
+import Data.Ratio ( Ratio, (%) )
 
 -- | Basic type used for a Tableau/Diagram
 newtype Tableau = Tableau [String] deriving (Eq)
 instance Show Tableau where
     show (Tableau t) = unlines t
+    showList ts = showString $ showt ts
 
 -- | Show like function to display a list of tableaux.
 showt :: [Tableau] -> String
 showt [] = "----"
 showt [t] = show t ++ "----"
 showt (t:ts) = show t ++ "----\n" ++ showt ts
+
 
 -- ytSymbols [0] = ["# ",
 --                   "# "]
@@ -133,10 +134,34 @@ ytSymbols is = go (reverse is) (Tableau ["# "])
                 go []         t = t
                 go (i:is) (Tableau (r:rs)) = go is $ Tableau $
                         concat (r : replicate i "# ") : r : rs
+
+
 -- | Build multiple tableaux from multiple labels.
 ytsSymbols :: [[Int]] -> [Tableau]
 ytsSymbols = map ytSymbols
 
+-- >>> ytSymbols [1]
+-- # # 
+-- # 
+
+-- >>> ytsSymbols [[0],[1],[2],[0,1],[1,1]]
+-- # 
+-- # 
+-- ----
+-- # # 
+-- # 
+-- ----
+-- # # # 
+-- # 
+-- ----
+-- # # 
+-- # # 
+-- # 
+-- ----
+-- # # # 
+-- # # 
+-- # 
+-- ----
 
 -- | Calculate the number representation from a tableau.
 ytNums :: Tableau -> [Int]
