@@ -179,11 +179,7 @@ ytsSymbols = map ytSymbols
 ytNums :: Tableau -> [Int]
 ytNums (Tableau [])  = []
 ytNums (Tableau [l]) = []
-ytNums (Tableau (l:m:ns)) = length l' - length m' : ytNums (Tableau (m:ns))
-                    where l' = noBlank l
-                          m' = noBlank m
-                          noBlank :: String -> String
-                          noBlank xs = [ x | x <- xs, x /= ' ']
+ytNums (Tableau (l:m:ns)) = length l - length m : ytNums (Tableau (m:ns))
 
 -- | Calculate the list of labels fro a list of tableaux.
 ytsNums :: [Tableau] -> [[Int]]
@@ -226,9 +222,7 @@ sym2letter :: Tableau -> Tableau
 sym2letter (Tableau xss) = Tableau $
                                 zipWith line2let xss ['a'..]
                 where line2let :: String -> Char -> String
-                      line2let [] _ = []
-                      line2let (x:xs) c | x == '#' = c:line2let xs c
-                                        | x == ' ' = x:line2let xs c
+                      line2let xs = replicate (length xs)
 
 
 -- >>> sym2letter (ytSymbols [0])
@@ -240,14 +234,19 @@ sym2letter (Tableau xss) = Tableau $
 -- b
 -- c
 
+-- >>> sym2letter (ytSymbols [2,3])
+-- aaaaaa
+-- bbbb
+-- c
 
 -- | Append a string to the i'th line of a tableau.
 appendAt :: Int -> String -> Tableau -> Tableau
 appendAt _ _ (Tableau []) = Tableau []
 appendAt _ [] t = t
 appendAt i s (Tableau ts) | i > length ts || i < 1 = Tableau []
-                | otherwise = Tableau $ take (i-1) ts ++ [(ts !! (i-1)) ++ s]
-                                ++ drop i ts
+                | otherwise = Tableau $ take (i-1) ts ++
+                                [(ts !! (i-1)) ++ s] ++
+                                drop i ts
 
 -- | Produce a list of placing-coordinates of all combinations for a tableau
 --   with t rows to place c character.
@@ -275,7 +274,7 @@ newtab s t (i:is) = newtab s (appendAt i s t) is
 -- | Create multiple new tableau using newtab given one tableau and
 --  one line of a right side tableau.
 --
---   e.g.: tabs1 (ytSymbols [1,1,1]) "a a "
+--   e.g.: tabs1 (ytSymbols [1,1,1]) "aa"
 tabs1 :: Tableau -> String -> [Tableau]
 tabs1 t r = go t s (combis j k)
             where
@@ -374,8 +373,7 @@ colsOK (Tableau (x:y:zs)) = col2OK x y && colsOK (Tableau (y:zs))
 col2OK :: String -> String -> Bool
 col2OK _ [] = True
 col2OK [] _ = True
-col2OK (l:ls) (r:rs) | l == ' ' || r == ' ' = col2OK ls rs
-                     | l == '#' || r == '#' = col2OK ls rs
+col2OK (l:ls) (r:rs) | l == '#' || r == '#' = col2OK ls rs
                      | l == r = False
                      | otherwise = col2OK ls rs
 
@@ -411,10 +409,10 @@ elemrow :: String -> Int
 elemrow = length.strip
 
 sym :: String -> String
-sym xs = (head.strip) xs : ""
+sym xs = [(head.strip) xs]
 
 strip :: String -> String
-strip xs = [x | x <- xs, x /= ' ', x /= '#']
+strip xs = [x | x <- xs, x /= '#']
 
 -- | Read a string of letters from a given tableau to be checked
 --    for admissibility.
